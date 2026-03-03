@@ -2,9 +2,10 @@
 This repository provides the core implementation of the DNN-based demodulator proposed in:
 
 # Dual-Domain Deep Learning-Assisted NOMA-CSK Systems for Secure and Efficient Vehicular Communications
- Tingting Huang, Jundong Chen, Huanqiang Zeng, Guofa Cai, and Georges Kaddoum
- 
- *IEEE Transactions on Communications*, 2026.
+
+Tingting Huang, Jundong Chen, Huanqiang Zeng, Guofa Cai, and Georges Kaddoum
+
+*IEEE Transactions on Communications*, 2026.
 
 The code demonstrates the key techniques of the proposed DL-NOMA-CSK scheme, including dual-domain feature extraction, chaotic shift keying modulation, and the DNN demodulator architecture under multipath Rayleigh fading channels.
 
@@ -45,6 +46,16 @@ Input (2 × β)
 
 ---
 
+## Pre-generated Dataset & Model
+
+The pre-trained model `trained_net_2user.mat` is included directly in `models/`. Only the dataset requires a separate download due to its size:
+
+| File | Place in | Download |
+|------|----------|----------|
+| `train_data_2user.mat` | `dataset/` | [Download via Releases](https://github.com/jdchan0815-sketch/DL-NOMA-CSK/releases/download/V1.0/train_data_2user.mat) |
+
+---
+
 ## Repository Structure
 
 ```
@@ -54,9 +65,9 @@ DL-NOMA-CSK/
 ├── train_dnn.m             % Step 2: Train the DNN
 ├── test_ber.m              % Step 3: Evaluate BER
 ├── dataset/
-│   └── train_data.mat      % Pre-generated dataset
+│   └── train_data_2user.mat      % Download from Releases (see above)
 ├── models/
-│   └── trained_net.mat     % Pre-trained model weights
+│   └── trained_net_2user.mat     % Pre-trained model weights 
 └── results/                % BER curves (auto-generated)
 ```
 
@@ -73,7 +84,7 @@ test_ber
 ```
 
 This will:
-1. Load the pre-trained DNN from `models/trained_net.mat`
+1. Load the pre-trained DNN from `models/trained_net_2user.mat`
 2. Simulate transmission over Rayleigh fading + AWGN at $E_b/N_0 \in [0, 30]$ dB
 3. Plot the BER curve and save results to `results/`
 
@@ -88,9 +99,9 @@ train_dnn
 ```
 
 This will:
-1. Load training data from `dataset/train_data.mat`
+1. Load training data from `dataset/train_data_2user.mat`
 2. Build and train the DNN demodulator
-3. Save the trained model to `models/trained_net.mat` (replaces existing)
+3. Save the trained model to `models/trained_net_2user.mat` (replaces existing)
 
 You can then run `test_ber` to evaluate the re-trained model.
 
@@ -119,7 +130,7 @@ generate_dataset
 This will:
 1. Generate chaotic modulated symbols and pass through multipath Rayleigh fading
 2. Add AWGN at random $E_b/N_0 \in [24, 28]$ dB
-3. Extract dual-domain features and save to `dataset/train_data.mat` (replaces existing)
+3. Extract dual-domain features and save to `dataset/train_data_2user.mat` (replaces existing)
 
 You can then run `train_dnn` → `test_ber` for the full pipeline.
 
@@ -143,7 +154,7 @@ This repository is a **minimal demo** intended to showcase the core contribution
 
 The demo uses a **2-vehicle uplink scenario** under multipath Rayleigh fading with **perfect CSI** and a **shared pseudo-random number generator (PRNG)** assumed at both training and deployment stages, enabling ideal SIC signal reconstruction consistent with the primary simulation setting in the paper. 
 
-Other simulation configurations presented in the paper — including larger user counts ($N > 2$), different spreading factors, V2I channel models, and imperfect CSI scenarios — can be reproduced by extending this codebase.
+Other simulation configurations presented in the paper — including larger user counts ($N > 2$), different spreading factors, V2I channel models, and imperfect CSI scenarios — can be reproduced by extending this codebase. 
 
 The SIC procedure follows Algorithm 1 and the power allocation follows Eq. (5); both use standard PD-NOMA techniques and are not the focus of this repository.
 
